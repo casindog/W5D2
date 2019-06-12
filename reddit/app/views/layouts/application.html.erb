@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Reddit</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body>
+    <% if logged_in? %>
+      <%= current_user.username %>
+      <form action=<%= session_url %> method=POST>
+        <%= auth_token %>
+        <input type=hidden name=_method value=DELETE>
+        <input type=submit value='Sign Out'>
+      </form>
+    <% else %>
+      <a href=<%= new_session_url %>>Sign In!</a>
+    <% end %>
+    <%= flash[:errors] if flash[:errors] %>
+    <%= yield %>
+  </body>
+</html>
